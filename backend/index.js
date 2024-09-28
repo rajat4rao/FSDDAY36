@@ -14,10 +14,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const uri = 'mongodb+srv://balprao:igUaFOlnYzPl0tFT@productiondb.cgth5.mongodb.net/passwordreset?retryWrites=true&w=majority&appName=productiondb'
 
 mongoose
-  .connect(uri, {
+  .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -73,18 +72,12 @@ app.post("/api/forgot-password", async (req, res) => {
     await token.save();
 
     const url = `${process.env.CLIENT_URL}/reset-password/${token.token}`;
-    try {
-      const info = await transporter.sendMail({
-        from: process.env.EMAIL,
-        to: user.email,
-        subject: "Password Reset",
-        text: `Click on the link to reset your password: ${url}`,
-      });
-      console.log("Email sent: ", info.response);  // Log the response
-      // You can also use the info object for further processing (e.g., messageId)
-    } catch (error) {
-      console.error("Error sending email: ", error);
-    }
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: user.email,
+      subject: "Password Reset",
+      text: `Click on the link to reset your password: ${url}`,
+    });
 
     
 
