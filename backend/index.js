@@ -72,11 +72,50 @@ app.post("/api/forgot-password", async (req, res) => {
     await token.save();
 
     const url = `${process.env.CLIENT_URL}/reset-password/${token.token}`;
+    // HTML email template
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <tr>
+            <td style="text-align: center; padding-bottom: 20px;">
+              <h2 style="color: #333;">Password Reset Request</h2>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; color: #555;">
+              <p style="font-size: 16px; line-height: 24px; color: #333;">
+                Hello ${user.email || ''},<br/><br/>
+                We received a request to reset your password. You can reset it by clicking the button below:
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center; padding: 20px 0;">
+              <a href="${url}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #007BFF; text-decoration: none; border-radius: 5px;">Reset Password</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; color: #555;">
+              <p style="font-size: 16px; line-height: 24px; color: #333;">
+                If you did not request a password reset, please ignore this email.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center; padding-top: 20px; color: #999; font-size: 12px;">
+              <p>&copy; ${new Date().getFullYear()} Your Company. All rights reserved.</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    `;
+
+    // Send email
     await transporter.sendMail({
       from: process.env.EMAIL,
       to: user.email,
-      subject: "Password Reset",
-      text: `Click on the link to reset your password: ${url}`,
+      subject: "Password Reset Request",
+      html: htmlContent, // Use the HTML email content
     });
 
     
