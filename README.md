@@ -19,6 +19,74 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ---
 
+
+## API Endpoints
+
+- **Register**: `POST /api/register`
+
+  - **Request Body**:
+    ```json
+    {
+      "username": "yourUsername",
+      "email": "yourEmail",
+      "password": "yourPassword"
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "message": "User registered successfully"
+    }
+    ```
+
+- **Login**: `POST /api/login`
+
+  - **Request Body**:
+    ```json
+    {
+      "email": "yourEmail",
+      "password": "yourPassword"
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "message": "Login successful",
+      "token": "yourJWTToken"
+    }
+    ```
+
+- **Forgot Password**: `POST /api/forgot-password`
+
+  - **Request Body**:
+    ```json
+    {
+      "email": "yourEmail"
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "message": "Password reset link sent to email"
+    }
+    ```
+
+- **Reset Password**: `PUT /api/reset-password/:token`
+  - **Request Body**:
+    ```json
+    {
+      "password": "yourNewPassword"
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "message": "Password has been reset successfully"
+    }
+    ```
+
+---
+
 ## Installation
 
 1. Clone the repository:
