@@ -97,7 +97,7 @@ app.post("/api/forgot-password", async (req, res) => {
           <tr>
             <td style="padding: 10px; color: #555;">
               <p style="font-size: 16px; line-height: 24px; color: #333;">
-                If you did not request a password reset, please ignore this email.
+                The password reset link will be valid for 2 hours. If you did not request a password reset, please ignore this email.
               </p>
             </td>
           </tr>
@@ -136,6 +136,15 @@ app.put("/api/reset-password/:token", async (req, res) => {
       return res
         .status(400)
         .send({ message: "Invalid or expired password reset token" });
+    }
+
+    // Check if token is expired (created more than 2 hours ago)
+    const tokenAgeInHours = Math.abs(new Date() - passwordResetToken.createdAt) / (1000 * 60 * 60);
+    if (tokenAgeInHours > 2) {
+      await passwordResetToken.deleteOne(); // Optionally, delete expired tokens
+      return res
+        .status(400)
+        .send({ message: "Password reset token has expired. Please click forgot password again." });
     }
 
     const user = await User.findById(passwordResetToken.userId);
