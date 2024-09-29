@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Project URL
 
-- **Live URL**: Click [here](https://fsdday36.onrender.com/).
+- **Live URL**: Click [here](https://password-reset-fsdday37.onrender.com/).
 - **Backend URL** Click [here](https://fsdday36-backend.onrender.com/).
   
 ## Technologies:
@@ -92,13 +92,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/rajat4rao/FSDDAY36.git
+git clone https://github.com/rajat4rao/password-reset.git
 ```
 
 2. Navigate to the project directory:
 
 ```bash
-cd FSDDAY36
+cd password-reset
 ```
 
 3. Install the dependencies for frontend:
